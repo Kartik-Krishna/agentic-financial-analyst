@@ -15,3 +15,12 @@ def get_basic_info(ticker: str) -> dict:
         "market_cap": market_cap,
         "current_price": current_price,
     }
+
+def get_financial_statements(ticker:str):
+    stock = yf.Ticker(ticker)
+
+    income_stmt = stock.financials
+    balance_sheet = stock.balance_sheet
+    cash_flow = stock.cashflow
+
+    return income_stmt, balance_sheet, cash_flow
