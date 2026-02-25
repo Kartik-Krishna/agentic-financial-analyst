@@ -1,4 +1,4 @@
-from data.financial_data import get_basic_info, get_financial_statements
+from data.financial_data import get_basic_info, get_financial_statements, compute_ratios, interpret_ratios, score_company
 
 def main():
     ticker = input("Enter ticker symbol: ").upper()
@@ -39,6 +39,32 @@ def main():
     print("Net Income:", net_income)
     print("Total Assets:", total_assets)
     print("Total Liabilities:", total_liabilities)
+
+    ratios = compute_ratios(income_stmt, balance_sheet)
+
+    label_map = {
+    "profit_margin": "Profit Margin",
+    "roa": "Return on Assets (ROA)",
+    "debt_to_assets": "Debt-to-Assets Ratio",
+    "revenue_growth": "Revenue Growth (YoY)"
+}
+
+    print("\nFinancial Ratios:")
+
+    for key, value in ratios.items():
+        print(f"{label_map[key]}: {value:.2%}")
+
+    analysis = interpret_ratios(ratios)
+
+    print("\nFinancial Health Summary:")
+    for value in analysis.values():
+        print("-", value)
+
+    scores = score_company(ratios)
+
+    print("\nFinancial Strength Scores:")
+    for key, value in scores.items():
+        print(f"{key}: {value}/10")
 
 if __name__ == "__main__":
     main()
